@@ -1,0 +1,49 @@
+---
+name: code-execution-engine
+services:
+
+  redis:
+    image: redis/redis-stack:latest
+    ports:
+      - 8001:8001
+    volumes:
+      - redis-data:/data
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - 3007:27017
+    volumes:
+      - mongodb-data:/data/db
+
+  submission-service:
+    build:
+      context: code-submission-service
+      dockerfile: Dockerfile
+    ports:
+      - 3005:3005
+    env_file:
+      - ./code-submission-service/.env
+    depends_on:
+      - "mongodb"
+      - "redis"
+
+  execution-service:
+    build:
+      context: code-execution-service
+      dockerfile: Dockerfile
+    ports:
+      - 3006:3006
+    env_file:
+      - ./code-execution-service/.env
+    environment:
+      - HOST_OS=windows
+      - DOCKER_HOST=tcp://host.docker.internal:2375
+    depends_on:
+      - "mongodb"
+      - "redis"
+      - "submission-service"
+
+volumes:
+  mongodb-data: {}
+  redis-data: {}
