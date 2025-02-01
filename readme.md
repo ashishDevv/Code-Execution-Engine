@@ -209,7 +209,7 @@ git clone https://github.com/ashishDevv/Code-Execution-Engine.git
 
 4. Now go to the directory of the project and open a terminal and run the following command to start the services.
 ```bash
-docker compose -d up --build
+docker-compose up --build -d
 ```
 
 5. Now you can access the api at `http://localhost:3005/api/submit` using postman or any other api client. **Note :** Make sure no other process is using port `3005`
