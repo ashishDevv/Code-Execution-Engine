@@ -69,7 +69,7 @@ Now with the help of long polling, client will get the output of the code.
 
 As we can't execute the code in the same service, where the code is submitted, because it will overload the service, and not a scalable solution. So for that asynchronous processing is good approach.
 
-For that, we are using [BullMQ](https://github.com/OptimalBits/bullmq), it is simple, powerful and highly scalable queuing system for producing and consuming events or messages.
+For that, we are using [BullMQ](https://github.com/taskforcesh/bullmq), it is simple, powerful and highly scalable queuing system for producing and consuming events or messages.
 
 Code Submission Service will produce the job to the message queue, and each instance of Code Execution Service will consume the job from the message queue. Note, that a job will be only consumed by one of the instance of Code Execution Service.
 
